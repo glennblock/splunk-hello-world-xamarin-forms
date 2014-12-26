@@ -35,13 +35,13 @@ namespace SplunkHelloWorld
             };
 
             page.Appearing += async (sender, e) => {
-                var service = new Service (Scheme.Https, "localhost", 8089);
+                var service = new Service (new Uri("https://localhost:8089"));
                 await service.LogOnAsync ("admin", "changeme");
                 var results = await service.ExportSearchResultsAsync ("search index = sample | head 10");
                 foreach (var result in results) {
                     events.Add (new EventViewModel { Text = result.GetValue ("_raw").ToString () + "\n" });
                 }
-            };
+            };  
             return page;
         }
     }
